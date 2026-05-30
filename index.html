@@ -52,7 +52,17 @@ Index · HTML
     .nav-badge { display:flex;align-items:center;gap:.55rem;font-size:.56rem;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3); }
     .badge-dot { width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:dp 2.5s ease-in-out infinite; }
     @keyframes dp { 0%,100%{opacity:1} 50%{opacity:.4} }
- 
+    .nav-hamburger { display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;padding:0; }
+    .nav-hamburger span { display:block;width:22px;height:1px;background:var(--ink);transition:all .3s var(--ease);transform-origin:center; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0;transform:scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
+    .nav-drawer { display:none;position:fixed;top:68px;left:0;right:0;z-index:399;background:rgba(255,255,255,.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--rule);padding:1.5rem 2rem 2rem;flex-direction:column;gap:0;transform:translateY(-8px);opacity:0;transition:transform .35s var(--ease),opacity .35s var(--ease); }
+    .nav-drawer.open { transform:translateY(0);opacity:1; }
+    .nav-drawer li { list-style:none;border-bottom:1px solid var(--rule); }
+    .nav-drawer li:last-child { border-bottom:none; }
+    .nav-drawer a { display:block;padding:.9rem 0;font-size:.7rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;transition:color .2s; }
+    .nav-drawer a:hover { color:var(--ink); }
     /* HERO */
     #hero { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 3rem;position:relative;overflow:hidden; }
     .hero-bg-text { position:absolute;font-family:var(--serif);font-size:22vw;font-weight:400;color:rgba(12,11,9,.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;user-select:none;white-space:nowrap;letter-spacing:-.03em; }
@@ -209,7 +219,7 @@ Index · HTML
     [data-r][data-d="5"]{transition-delay:.5s}[data-r][data-d="6"]{transition-delay:.6s}
  
     @media(max-width:768px){
-      nav{padding:0 1.5rem;} .nav-badge{display:none;} .wrap{padding:0 1.5rem;}
+      nav{padding:0 1.5rem;} .nav-badge{display:none;} .nav-links{display:none;} .nav-hamburger{display:flex;} .wrap{padding:0 1.5rem;}
       .about-grid{grid-template-columns:1fr;gap:3rem;}
       .exp-item{grid-template-columns:1fr;gap:1rem;} .exp-period{display:none;}
       .proj-item{grid-template-columns:2.2rem 1fr;gap:1.2rem;} .proj-link{display:none;}
@@ -240,8 +250,20 @@ Index · HTML
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-badge"><div class="badge-dot"></div>AI @ BDO</div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
- 
+<ul class="nav-drawer" id="nav-drawer">
+  <li><a href="#about" class="drawer-link">About</a></li>
+  <li><a href="#experience" class="drawer-link">Experience</a></li>
+  <li><a href="#projects" class="drawer-link">Projects</a></li>
+  <li><a href="#aitools" class="drawer-link">AI Agents</a></li>
+  <li><a href="#research" class="drawer-link">Research</a></li>
+  <li><a href="#skills" class="drawer-link">Skills</a></li>
+  <li><a href="#certs" class="drawer-link">Certifications</a></li>
+  <li><a href="#contact" class="drawer-link">Contact</a></li>
+</ul>
 <!-- HERO — removed "500+ LeetCode" chip, added "Research & Papers" -->
 <section id="hero">
   <div class="hero-bg-text">KD</div>
@@ -658,6 +680,21 @@ Index · HTML
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});
   },{threshold:.08});
   document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+  const hb = document.getElementById('hamburger');
+  const dr = document.getElementById('nav-drawer');
+  if (hb && dr) {
+    dr.style.display = 'flex';
+    hb.addEventListener('click', () => {
+      hb.classList.toggle('open');
+      dr.classList.toggle('open');
+    });
+    document.querySelectorAll('.drawer-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hb.classList.remove('open');
+        dr.classList.remove('open');
+      });
+    });
+  }
 </script>
 </body>
 </html>
