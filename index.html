@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krish Desai — AI & Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white:#ffffff; --off:#f7f6f3; --ink:#0c0b09; --ink-2:#252320;
+      --ink-3:#6b6760; --ink-4:#b5b1a9; --ink-5:#e2dfd9;
+      --rule:rgba(12,11,9,0.09);
+      --serif:'Cormorant',Georgia,serif; --sans:'Outfit',sans-serif;
+      --ease:cubic-bezier(0.22,1,0.36,1);
+    }
+    html { scroll-behavior:smooth; }
+    body { background:var(--white);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden; }
+
+    /* CURSOR */
+    * { cursor:none !important; }
+    #cur { position:fixed;z-index:9999;width:7px;height:7px;background:var(--ink);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s; }
+    #cur-r { position:fixed;z-index:9998;width:32px;height:32px;border:1px solid rgba(12,11,9,.2);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s; }
+    body:has(a:hover,button:hover) #cur { width:11px;height:11px; }
+    body:has(a:hover,button:hover) #cur-r { width:48px;height:48px;border-color:rgba(12,11,9,.1); }
+
+    /* NAV */
+    nav { position:fixed;top:0;left:0;right:0;z-index:400;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;background:rgba(255,255,255,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--rule); }
+    .nav-logo { font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--ink);text-decoration:none;letter-spacing:.02em; }
+    .nav-logo em { font-style:italic;color:var(--ink-3); }
+    .nav-links { display:flex;gap:2rem;list-style:none; }
+    .nav-links a { font-size:.58rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;position:relative;transition:color .25s; }
+    .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease); }
+    .nav-links a:hover { color:var(--ink); }
+    .nav-links a:hover::after { transform:scaleX(1); }
+    .nav-badge { display:flex;align-items:center;gap:.55rem;font-size:.56rem;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3); }
+    .badge-dot { width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:dp 2.5s ease-in-out infinite; }
+    @keyframes dp { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    /* HERO */
+    #hero { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 3rem;position:relative;overflow:hidden; }
+    .hero-bg-text { position:absolute;font-family:var(--serif);font-size:22vw;font-weight:400;color:rgba(12,11,9,.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;user-select:none;white-space:nowrap;letter-spacing:-.03em; }
+    .hero-inner { position:relative;z-index:1;max-width:820px; }
+    .hero-eyebrow { display:inline-flex;align-items:center;gap:1.1rem;font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-4);font-weight:300;margin-bottom:2.2rem; }
+    .ey-line { width:2.8rem;height:1px;background:var(--ink-4); }
+    .hero-name { font-family:var(--serif);font-size:clamp(4rem,11vw,9rem);font-weight:300;line-height:.9;letter-spacing:-.025em;color:var(--ink);margin-bottom:.15em; }
+    .hero-name-sub { font-style:italic;font-weight:300;display:block;color:var(--ink-3); }
+    .hero-vline { width:1px;height:3.5rem;background:linear-gradient(to bottom,var(--ink-4),transparent);margin:2.5rem auto; }
+    .hero-roles { display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-bottom:3.5rem; }
+    .role-chip { font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;font-weight:300;color:var(--ink-3);padding:.35rem 1rem;border:1px solid var(--ink-5);transition:border-color .25s,color .25s; }
+    .role-chip:hover { border-color:var(--ink-3);color:var(--ink); }
+    .hero-cta { display:inline-block;font-size:.58rem;font-weight:400;letter-spacing:.26em;text-transform:uppercase;color:var(--white);background:var(--ink);text-decoration:none;padding:1.1rem 3.2rem;transition:background .3s,letter-spacing .3s; }
+    .hero-cta:hover { background:var(--ink-2);letter-spacing:.32em; }
+    .hero-scroll { position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.65rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4); }
+    .scroll-bar { width:1px;height:3rem;background:linear-gradient(to bottom,var(--ink-4),transparent);animation:sb 2s ease-in-out infinite; }
+    @keyframes sb { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    /* SHARED */
+    .wrap { max-width:880px;margin:0 auto;padding:0 4rem; }
+    .section-eye { font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-4);font-weight:300;margin-bottom:1.3rem; }
+    .section-title { font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:300;line-height:1.02;letter-spacing:-.02em;color:var(--ink); }
+    .section-title em { font-style:italic;color:var(--ink-3); }
+    .s-rule { width:2.2rem;height:1px;background:var(--ink);margin-top:1.6rem; }
+    .s-rule.center { margin-left:auto;margin-right:auto; }
+
+    /* ABOUT */
+    #about { padding:9rem 0;border-top:1px solid var(--rule); }
+    .about-grid { display:grid;grid-template-columns:1.05fr 1fr;gap:7rem;align-items:start;margin-top:5rem; }
+    .about-text p { font-size:.92rem;line-height:2;color:var(--ink-3);margin-bottom:1.1rem; }
+    .about-text p:last-child { margin-bottom:0; }
+    .about-text strong { font-weight:400;color:var(--ink); }
+    .stat-row { border-top:1px solid var(--rule);padding:1.8rem 0; }
+    .stat-row:last-child { border-bottom:1px solid var(--rule); }
+    .stat-num { font-family:var(--serif);font-size:3rem;font-weight:300;line-height:1;color:var(--ink);margin-bottom:.3rem; }
+    .stat-num sup { font-family:var(--sans);font-size:.7rem;font-weight:200;letter-spacing:.04em;color:var(--ink-3); }
+    .stat-lbl { font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:300; }
+
+    /* EXPERIENCE */
+    #experience { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
+    .exp-list { margin-top:5rem; }
+    .exp-item { display:grid;grid-template-columns:9rem 1fr;gap:3rem;border-top:1px solid var(--rule);padding:2.8rem 0; }
+    .exp-item:last-child { border-bottom:1px solid var(--rule); }
+    .exp-period { font-size:.62rem;letter-spacing:.1em;color:var(--ink-4);font-weight:300;padding-top:.3rem;line-height:1.7; }
+    .exp-company { font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);margin-bottom:.6rem;font-weight:300; }
+    .exp-role { font-family:var(--serif);font-size:1.55rem;font-weight:400;color:var(--ink);margin-bottom:.7rem;line-height:1.1; }
+    .exp-desc { font-size:.85rem;line-height:1.95;color:var(--ink-3);max-width:560px; }
+    .exp-desc+.exp-desc { margin-top:.7rem; }
+    .exp-tags { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem; }
+    .exp-tag { font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid var(--ink-5);color:var(--ink-4);font-weight:300;transition:all .2s; }
+    .exp-item:hover .exp-tag { border-color:var(--ink-4);color:var(--ink-3); }
+
+    /* PROJECTS */
+    #projects { padding:9rem 0;border-top:1px solid var(--rule); }
+    .proj-list { margin-top:5rem; }
+    .proj-item { display:grid;grid-template-columns:3rem 1fr 6rem;gap:2.5rem;border-top:1px solid var(--rule);padding:3rem 0;position:relative;align-items:start; }
+    .proj-item:last-child { border-bottom:1px solid var(--rule); }
+    .proj-item::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .proj-item:hover::after { transform:scaleX(1); }
+    .proj-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4);padding-top:.35rem; }
+    .proj-name { font-family:var(--serif);font-size:1.7rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.65rem;line-height:1.1;transition:color .25s; }
+    .proj-item:hover .proj-name { color:var(--ink-2); }
+    .proj-desc { font-size:.83rem;line-height:1.95;color:var(--ink-3);max-width:520px;margin-bottom:1.1rem; }
+    .proj-pills { display:flex;gap:.4rem;flex-wrap:wrap; }
+    .pill { font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;font-weight:300;padding:.2rem .6rem;border:1px solid var(--rule);color:var(--ink-4); }
+    .proj-link { text-align:right;padding-top:.35rem; }
+    .proj-link a { font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);text-decoration:none;transition:color .2s;display:inline-flex;align-items:center;gap:.4rem; }
+    .proj-link a:hover { color:var(--ink); }
+
+    /* AI AGENTS */
+    #aitools { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
+    .tools-intro { font-size:.88rem;line-height:2;color:var(--ink-3);max-width:620px;margin-top:1.5rem; }
+    .tools-intro strong { font-weight:400;color:var(--ink); }
+    .agent-cards { display:flex;flex-direction:column;margin-top:5rem;border-top:1px solid var(--rule); }
+    .agent-card { padding:3.2rem 0;border-bottom:1px solid var(--rule);position:relative; }
+    .agent-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .agent-card:hover::after { transform:scaleX(1); }
+    .agent-card-head { display:flex;align-items:center;gap:1.5rem;margin-bottom:1rem; }
+    .agent-card-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4); }
+    .agent-card-label { font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4);font-weight:300; }
+    .agent-card-title { font-family:var(--serif);font-size:1.8rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.85rem;line-height:1.1; }
+    .agent-card-desc { font-size:.85rem;line-height:2;color:var(--ink-3);max-width:680px;margin-bottom:1.8rem; }
+    .agent-card-details { border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:1.5rem; }
+    .agent-detail-row { display:grid;grid-template-columns:9rem 1fr;gap:2rem;padding:.85rem 0;border-bottom:1px solid var(--rule); }
+    .agent-detail-row:last-child { border-bottom:none; }
+    .detail-key { font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4);font-weight:300;padding-top:.05rem; }
+    .detail-val { font-size:.78rem;color:var(--ink-3);font-weight:300;line-height:1.7; }
+    .agent-pills { display:flex;gap:.45rem;flex-wrap:wrap; }
+    .a-pill { font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;border:1px solid var(--ink-5);color:var(--ink-4);font-weight:300;transition:all .2s; }
+    .agent-card:hover .a-pill { border-color:var(--ink-4);color:var(--ink-3); }
+
+    /* RESEARCH */
+    #research { padding:9rem 0;border-top:1px solid var(--rule); }
+    .research-list { margin-top:5rem; }
+    .research-item { display:grid;grid-template-columns:7rem 1fr;gap:3rem;border-top:1px solid var(--rule);padding:3rem 0;position:relative; }
+    .research-item:last-child { border-bottom:1px solid var(--rule); }
+    .research-item::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .research-item:hover::after { transform:scaleX(1); }
+    .research-meta { display:flex;flex-direction:column;gap:1rem;padding-top:.3rem; }
+    .research-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4); }
+    .research-tag-group { display:flex;flex-direction:column;gap:.35rem; }
+    .r-tag { font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid var(--ink-5);color:var(--ink-4);font-weight:300;width:fit-content; }
+    .research-origin { font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);margin-bottom:.65rem;font-weight:300; }
+    .research-title { font-family:var(--serif);font-size:1.45rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.75rem;line-height:1.15;transition:color .25s; }
+    .research-item:hover .research-title { color:var(--ink-2); }
+    .research-desc { font-size:.83rem;line-height:2;color:var(--ink-3);max-width:600px; }
+
+    /* SKILLS */
+    #skills { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
+    .skills-grid { margin-top:5rem;border-top:1px solid var(--rule); }
+    .skill-row { display:grid;grid-template-columns:10rem 8rem 1fr;gap:2.5rem;border-bottom:1px solid var(--rule);padding:1.5rem 0;align-items:center;transition:background .2s; }
+    .skill-row:hover { background:rgba(12,11,9,.02); }
+    .sk-cat { font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4);font-weight:300; }
+    .sk-name { font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--ink); }
+    .sk-tags { display:flex;flex-wrap:wrap;gap:.4rem; }
+    .sk-tag { font-size:.58rem;letter-spacing:.08em;padding:.22rem .65rem;border:1px solid var(--ink-5);color:var(--ink-3);font-weight:300;transition:all .2s; }
+    .skill-row:hover .sk-tag { border-color:var(--ink-4);color:var(--ink-2); }
+
+    /* AI AGENTS */
+    #aitools { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
+    .tools-intro { font-size:.88rem;line-height:2;color:var(--ink-3);max-width:620px;margin-top:1.5rem; }
+    .tools-intro strong { font-weight:400;color:var(--ink); }
+    .agent-cards { display:flex;flex-direction:column;margin-top:5rem;border-top:1px solid var(--rule); }
+    .agent-card { padding:3.2rem 0;border-bottom:1px solid var(--rule);position:relative; }
+    .agent-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .agent-card:hover::after { transform:scaleX(1); }
+    .agent-card-head { display:flex;align-items:center;gap:1.5rem;margin-bottom:1rem; }
+    .agent-card-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4); }
+    .agent-card-label { font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4);font-weight:300; }
+    .agent-card-title { font-family:var(--serif);font-size:1.8rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.85rem;line-height:1.1; }
+    .agent-card-desc { font-size:.85rem;line-height:2;color:var(--ink-3);max-width:680px;margin-bottom:1.8rem; }
+    .agent-card-details { border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-bottom:1.5rem; }
+    .agent-detail-row { display:grid;grid-template-columns:9rem 1fr;gap:2rem;padding:.85rem 0;border-bottom:1px solid var(--rule); }
+    .agent-detail-row:last-child { border-bottom:none; }
+    .detail-key { font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-4);font-weight:300;padding-top:.05rem; }
+    .detail-val { font-size:.78rem;color:var(--ink-3);font-weight:300;line-height:1.7; }
+    .agent-pills { display:flex;gap:.45rem;flex-wrap:wrap; }
+    .a-pill { font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;border:1px solid var(--ink-5);color:var(--ink-4);font-weight:300;transition:all .2s; }
+    .agent-card:hover .a-pill { border-color:var(--ink-4);color:var(--ink-3); }
+
+    /* CERTS — list layout, scales infinitely with no orphan gap */
+    #certs { padding:9rem 0;border-top:1px solid var(--rule); }
+    .certs-list { margin-top:5rem;border-top:1px solid var(--rule); }
+    .cert-row { display:grid;grid-template-columns:2.2rem 1fr auto;gap:2rem;align-items:baseline;border-bottom:1px solid var(--rule);padding:1.55rem 0;transition:background .2s; }
+    .cert-row:hover { background:rgba(12,11,9,.018); }
+    .cert-row-num { font-family:var(--serif);font-style:italic;font-size:.75rem;color:var(--ink-5); }
+    .cert-row-name { font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:.22rem; }
+    .cert-row-issuer { font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4);font-weight:300; }
+    .cert-row-date { font-size:.56rem;letter-spacing:.1em;color:var(--ink-5);font-weight:300;text-align:right;white-space:nowrap; }
+
+    /* CONTACT */
+    #contact { padding:9rem 0 7rem;background:var(--ink);border-top:1px solid var(--rule); }
+    #contact .section-eye { color:rgba(255,255,255,.25); }
+    #contact .section-title { color:var(--white); }
+    #contact .section-title em { color:rgba(255,255,255,.38); }
+    #contact .s-rule { background:rgba(255,255,255,.18); }
+    .contact-sub { font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);text-align:center;margin-top:1.2rem;font-weight:200; }
+    .contact-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);margin-top:5rem; }
+    .c-item { background:var(--ink);padding:2rem 1.75rem;text-decoration:none;display:block;transition:background .3s;position:relative;overflow:hidden; }
+    .c-item::before { content:'';position:absolute;top:0;left:0;right:0;height:1px;background:rgba(255,255,255,.55);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease); }
+    .c-item:hover { background:rgba(255,255,255,.045); }
+    .c-item:hover::before { transform:scaleX(1); }
+    .c-type { font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.8rem;font-weight:300; }
+    .c-val { font-size:.78rem;font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.02em; }
+    .c-arr { font-size:.9rem;color:rgba(255,255,255,.18);position:absolute;top:2rem;right:1.75rem;transition:all .3s; }
+    .c-item:hover .c-arr { color:rgba(255,255,255,.6);transform:translate(3px,-3px); }
+
+    footer { background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 4.5rem;display:flex;justify-content:space-between;align-items:center; }
+    footer p { font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.2); }
+
+    /* REVEAL */
+    [data-r] { opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease); }
+    [data-r].on { opacity:1;transform:none; }
+    [data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}
+    [data-r][data-d="3"]{transition-delay:.3s}[data-r][data-d="4"]{transition-delay:.4s}
+    [data-r][data-d="5"]{transition-delay:.5s}[data-r][data-d="6"]{transition-delay:.6s}
+
+    @media(max-width:768px){
+      nav{padding:0 1.5rem;} .nav-badge{display:none;} .wrap{padding:0 1.5rem;}
+      .about-grid{grid-template-columns:1fr;gap:3rem;}
+      .exp-item{grid-template-columns:1fr;gap:1rem;} .exp-period{display:none;}
+      .proj-item{grid-template-columns:2.2rem 1fr;gap:1.2rem;} .proj-link{display:none;}
+      .agent-detail-row{grid-template-columns:1fr;gap:.3rem;}
+      .research-item{grid-template-columns:1fr;gap:1rem;} .research-meta{flex-direction:row;}
+      .skill-row{grid-template-columns:7rem 1fr;gap:1.5rem;} .sk-name{display:none;}
+      .cert-row{grid-template-columns:2.2rem 1fr;gap:1rem;} .cert-row-date{display:none;}
+      .contact-grid{grid-template-columns:1fr 1fr;}
+      footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem;}
+    }
+    @media(max-width:480px){
+      .contact-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-r"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Krish <em>Desai</em></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#aitools">AI Agents</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-badge"><div class="badge-dot"></div>AI @ BDO</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-text">KD</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="ey-line"></span>Software Engineer &amp; AI Practitioner<span class="ey-line"></span></div>
+    <h1 class="hero-name">Krish<span class="hero-name-sub">Desai.</span></h1>
+    <div class="hero-vline"></div>
+    <div class="hero-roles">
+      <span class="role-chip">Full-Stack Engineering</span>
+      <span class="role-chip">Artificial Intelligence</span>
+      <span class="role-chip">Quant Finance</span>
+      <span class="role-chip">AI Agents &amp; MCP</span>
+      <span class="role-chip">500+ LeetCode</span>
+    </div>
+    <a href="#projects" class="hero-cta">View My Work</a>
+  </div>
+  <div class="hero-scroll">Scroll<div class="scroll-bar"></div></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div data-r>
+      <p class="section-eye">I — About</p>
+      <h2 class="section-title">Aggressive learner.<br><em>Ruthless builder.</em></h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="about-grid">
+      <div data-r data-d="1">
+        <div class="about-text">
+          <p>I'm a software engineer and AI practitioner at <strong>BDO India</strong>, where I build enterprise financial software for High Net Worth Individuals — integrating Django, Elasticsearch, Celery, and machine learning into production systems used by wealth managers daily.</p>
+          <p>I work deliberately across disciplines: backend systems, AI engineering, and quantitative finance. I build <strong>AI agents using Claude, MCP servers, and agentic workflows</strong> — including a live stock analysis agent and a reverse DCF modelling agent — and make heavy use of <strong>Claude Code</strong> for accelerating engineering work.</p>
+          <p>I study research papers seriously — from PageRank to MapReduce to quantum computing. I've solved over <strong>500 problems on LeetCode</strong>. I'm an avid learner, aggressive in execution, and deeply curious about systems that reason under uncertainty.</p>
+        </div>
+      </div>
+      <div data-r data-d="2">
+        <div class="stat-row"><div class="stat-num">1<sup>yr 9mo</sup></div><div class="stat-lbl">At BDO India</div></div>
+        <div class="stat-row"><div class="stat-num">500<sup>+</sup></div><div class="stat-lbl">LeetCode Problems Solved</div></div>
+        <div class="stat-row"><div class="stat-num">5<sup>+</sup></div><div class="stat-lbl">Full-Stack Projects Shipped</div></div>
+        <div class="stat-row"><div class="stat-num">8</div><div class="stat-lbl">Certifications Earned</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div data-r>
+      <p class="section-eye">II — Experience</p>
+      <h2 class="section-title">Where I've<br><em>worked.</em></h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item" data-r data-d="1">
+        <div class="exp-period">Mar 2025<br>— Present<br><br>Full-time</div>
+        <div>
+          <div class="exp-company">BDO India · Ahmedabad</div>
+          <div class="exp-role">AI Executive</div>
+          <p class="exp-desc">Core engineer on <em>PCS (Private Client Service)</em> — an enterprise accounting platform for High Net Worth Individuals. Responsible for backend architecture, data pipeline engineering, and designing the AI layer currently being integrated into the product.</p>
+          <p class="exp-desc">Building search infrastructure with Elasticsearch, distributed task systems via Celery and Redis, and applying machine learning to automate complex financial data workflows at scale on Azure.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">Django</span><span class="exp-tag">Python</span><span class="exp-tag">Pandas</span>
+            <span class="exp-tag">PostgreSQL</span><span class="exp-tag">Elasticsearch</span><span class="exp-tag">Celery</span>
+            <span class="exp-tag">Redis</span><span class="exp-tag">Azure</span><span class="exp-tag">AI / ML</span>
+          </div>
+        </div>
+      </div>
+      <div class="exp-item" data-r data-d="2">
+        <div class="exp-period">Sep 2024<br>— Mar 2025<br><br>Internship</div>
+        <div>
+          <div class="exp-company">BDO India · Ahmedabad</div>
+          <div class="exp-role">AI Intern</div>
+          <p class="exp-desc">Joined BDO on the PCS platform. Contributed to backend development, data modelling, and early AI feature research. Converted to full-time AI Executive within 7 months based on performance.</p>
+          <div class="exp-tags">
+            <span class="exp-tag">Django</span><span class="exp-tag">PostgreSQL</span>
+            <span class="exp-tag">Python</span><span class="exp-tag">REST APIs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div data-r>
+      <p class="section-eye">III — Projects</p>
+      <h2 class="section-title">Selected<br><em>work.</em></h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="proj-list">
+
+      <div class="proj-item" data-r data-d="1">
+        <div class="proj-num">01</div>
+        <div>
+          <h3 class="proj-name">PCS — Private Client Service</h3>
+          <p class="proj-desc">Enterprise accounting software for HNIs at BDO India. Engineered backend systems handling complex financial data pipelines, Elasticsearch-powered search, distributed task queues, and an AI integration layer currently being rolled out to wealth managers.</p>
+          <div class="proj-pills"><span class="pill">Django</span><span class="pill">PostgreSQL</span><span class="pill">Elasticsearch</span><span class="pill">Celery</span><span class="pill">Redis</span><span class="pill">Azure</span><span class="pill">AI/ML</span></div>
+        </div>
+        <div class="proj-link"><a href="#">Private ↗</a></div>
+      </div>
+
+      <div class="proj-item" data-r data-d="2">
+        <div class="proj-num">02</div>
+        <div>
+          <h3 class="proj-name">Stock Analysis Agent</h3>
+          <p class="proj-desc">An AI-powered stock analysis agent built with Claude and MCP tools. Given a ticker, the agent retrieves financials, runs ratio analysis, assesses valuation, and synthesises a structured investment thesis — demonstrating agentic reasoning over real financial data.</p>
+          <div class="proj-pills"><span class="pill">Claude API</span><span class="pill">MCP</span><span class="pill">Python</span><span class="pill">Agentic AI</span><span class="pill">Finance</span></div>
+        </div>
+        <div class="proj-link"><a href="#aitools">Live Demo ↗</a></div>
+      </div>
+
+      <div class="proj-item" data-r data-d="3">
+        <div class="proj-num">03</div>
+        <div>
+          <h3 class="proj-name">Reverse DCF Model Agent</h3>
+          <p class="proj-desc">An agentic reverse DCF calculator that works backwards from a stock's current market price to determine the implied growth rate baked in by the market — exposing whether a stock is priced for optimism, pessimism, or something in between.</p>
+          <div class="proj-pills"><span class="pill">Claude API</span><span class="pill">DCF Modelling</span><span class="pill">Python</span><span class="pill">Quant Finance</span></div>
+        </div>
+        <div class="proj-link"><a href="#aitools">Live Demo ↗</a></div>
+      </div>
+
+      <div class="proj-item" data-r data-d="4">
+        <div class="proj-num">04</div>
+        <div>
+          <h3 class="proj-name">Stock Management System</h3>
+          <p class="proj-desc">Full-stack inventory and order management platform. Real-time stock tracking, order lifecycle management, and automated report generation built for operational speed and reliability.</p>
+          <div class="proj-pills"><span class="pill">React</span><span class="pill">Next.js</span><span class="pill">JavaScript</span><span class="pill">HTML/CSS</span></div>
+        </div>
+        <div class="proj-link"><a href="https://github.com/krish-vd" target="_blank">GitHub ↗</a></div>
+      </div>
+
+      <div class="proj-item" data-r data-d="5">
+        <div class="proj-num">05</div>
+        <div>
+          <h3 class="proj-name">Library Management System</h3>
+          <p class="proj-desc">Full-stack web application for library operations — book cataloguing, student registration, automated check-in/check-out flows, and intelligent search. Focused on clean UX under concurrent usage.</p>
+          <div class="proj-pills"><span class="pill">React</span><span class="pill">Node.js</span><span class="pill">Express</span><span class="pill">MongoDB</span></div>
+        </div>
+        <div class="proj-link"><a href="https://github.com/krish-vd" target="_blank">GitHub ↗</a></div>
+      </div>
+
+      <div class="proj-item" data-r data-d="6">
+        <div class="proj-num">06</div>
+        <div>
+          <h3 class="proj-name">Spring Boot RESTful API</h3>
+          <p class="proj-desc">Production-grade RESTful API with full CRUD operations, Spring Data JPA for MySQL integration, clean layered architecture, and proper exception handling patterns.</p>
+          <div class="proj-pills"><span class="pill">Java</span><span class="pill">Spring Boot</span><span class="pill">Spring Data JPA</span><span class="pill">MySQL</span></div>
+        </div>
+        <div class="proj-link"><a href="https://github.com/krish-vd" target="_blank">GitHub ↗</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AI AGENTS SECTION -->
+<section id="aitools">
+  <div class="wrap">
+    <div data-r>
+      <p class="section-eye">IV — AI Agents</p>
+      <h2 class="section-title">Agents &amp;<br><em>agentic systems.</em></h2>
+      <div class="s-rule"></div>
+      <p class="tools-intro">I build production-grade AI agents using the <strong>Claude API</strong>, <strong>Claude Code</strong>, and <strong>MCP (Model Context Protocol)</strong> servers — orchestrating multi-step reasoning, tool use, and agentic workflows across finance and software domains.</p>
+    </div>
+    <div class="agent-cards" data-r data-d="1">
+
+      <div class="agent-card">
+        <div class="agent-card-head">
+          <div class="agent-card-num">01</div>
+          <div class="agent-card-label">Equity Research · Claude API</div>
+        </div>
+        <h3 class="agent-card-title">Stock Analysis Agent</h3>
+        <p class="agent-card-desc">An agentic equity research system built with Claude. Given any stock ticker, the agent performs multi-step reasoning across business model assessment, financial ratio analysis, competitive moat evaluation, risk identification, and valuation perspective — synthesising a structured investment thesis in the style of a senior analyst. Built using Claude Code and agentic prompting patterns with tool-augmented retrieval.</p>
+        <div class="agent-card-details">
+          <div class="agent-detail-row"><span class="detail-key">Architecture</span><span class="detail-val">Single-agent, multi-step chain-of-thought with structured output</span></div>
+          <div class="agent-detail-row"><span class="detail-key">Tools used</span><span class="detail-val">Claude API · Claude Code · Agentic prompting · MCP tools</span></div>
+          <div class="agent-detail-row"><span class="detail-key">Output</span><span class="detail-val">Business model · Financials · Moat · Risks · Valuation · Thesis</span></div>
+        </div>
+        <div class="agent-pills">
+          <span class="a-pill">Claude API</span><span class="a-pill">Claude Code</span><span class="a-pill">MCP</span><span class="a-pill">Agentic AI</span><span class="a-pill">Equity Research</span>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="agent-card-head">
+          <div class="agent-card-num">02</div>
+          <div class="agent-card-label">Quantitative Finance · DCF Modelling</div>
+        </div>
+        <h3 class="agent-card-title">Reverse DCF Model Agent</h3>
+        <p class="agent-card-desc">A quantitative finance agent that inverts the traditional DCF model. Rather than projecting future cash flows to arrive at a price, this agent works backwards from a stock's current market price — solving for the implied growth rate the market has priced in via binary search over the DCF equation. Claude then interprets whether that implied growth is aggressive, conservative, or reasonable, and renders a margin-of-safety verdict. Built as part of my independent quant research practice.</p>
+        <div class="agent-card-details">
+          <div class="agent-detail-row"><span class="detail-key">Architecture</span><span class="detail-val">Computation layer (binary search DCF solver) + Claude interpretation layer</span></div>
+          <div class="agent-detail-row"><span class="detail-key">Inputs</span><span class="detail-val">Stock price · FCF · Shares outstanding · WACC · Terminal growth rate</span></div>
+          <div class="agent-detail-row"><span class="detail-key">Output</span><span class="detail-val">Implied growth rate (10-yr CAGR) · Valuation interpretation · Margin of safety</span></div>
+        </div>
+        <div class="agent-pills">
+          <span class="a-pill">Claude API</span><span class="a-pill">Reverse DCF</span><span class="a-pill">Quant Finance</span><span class="a-pill">Claude Code</span><span class="a-pill">Binary Search</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="wrap">
+    <div data-r>
+      <p class="section-eye">V — Research</p>
+      <h2 class="section-title">Papers studied<br><em>seriously.</em></h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="research-list">
+
+      <div class="research-item" data-r data-d="1">
+        <div class="research-meta">
+          <div class="research-num">01</div>
+          <div class="research-tag-group"><span class="r-tag">Graph Theory</span><span class="r-tag">Search</span></div>
+        </div>
+        <div class="research-body">
+          <div class="research-origin">Brin &amp; Page · Stanford · 1998</div>
+          <h3 class="research-title">The PageRank Citation Ranking: Bringing Order to the Web</h3>
+          <p class="research-desc">Conducted an independent research initiative inspired by this seminal paper. Engineered a miniature hyperlinked knowledge graph — a scaled-down Wikipedia prototype — modelling web pages as nodes and hyperlinks as directed edges in a stochastic adjacency matrix. Implemented the PageRank algorithm using iterative eigenvector decomposition to compute a stationary probability distribution, simulating a random surfer with a damping factor of 0.85. After running convergence cycles, visualised rank distribution across nodes — empirically confirming that nodes with higher indegree centrality and quality backlinks converge to significantly higher PageRank scores, mirroring how Google's infrastructure prioritises authoritative pages.</p>
+        </div>
+      </div>
+
+      <div class="research-item" data-r data-d="2">
+        <div class="research-meta">
+          <div class="research-num">02</div>
+          <div class="research-tag-group"><span class="r-tag">Distributed</span><span class="r-tag">Big Data</span></div>
+        </div>
+        <div class="research-body">
+          <div class="research-origin">Dean &amp; Ghemawat · Google · 2004</div>
+          <h3 class="research-title">MapReduce: Simplified Data Processing on Large Clusters</h3>
+          <p class="research-desc">Studied Google's foundational framework for distributed computation across commodity clusters. Analysed the Map/Reduce abstraction for parallelising large-scale data transformations, fault tolerance via task re-execution, and how the programming model underpins modern data engineering infrastructure — directly relevant to the data pipeline work at BDO.</p>
+        </div>
+      </div>
+
+      <div class="research-item" data-r data-d="3">
+        <div class="research-meta">
+          <div class="research-num">03</div>
+          <div class="research-tag-group"><span class="r-tag">AI Agents</span><span class="r-tag">Optimisation</span></div>
+        </div>
+        <div class="research-body">
+          <div class="research-origin">ToolGrad</div>
+          <h3 class="research-title">ToolGrad: Gradient-Based Tool Selection for Language Models</h3>
+          <p class="research-desc">Examined the ToolGrad framework for differentiable tool selection in language model pipelines. Studied how gradient signals propagate through discrete tool-use decisions, enabling end-to-end optimisation of tool-augmented inference — with direct application to the agentic AI systems I build.</p>
+        </div>
+      </div>
+
+      <div class="research-item" data-r data-d="4">
+        <div class="research-meta">
+          <div class="research-num">04</div>
+          <div class="research-tag-group"><span class="r-tag">Quantum</span><span class="r-tag">Algorithms</span></div>
+        </div>
+        <div class="research-body">
+          <div class="research-origin">Quantum Algorithms · T-Gate Complexity</div>
+          <h3 class="research-title">Quantum State Preparation with Optimal T-Count</h3>
+          <p class="research-desc">Studied the problem of preparing arbitrary quantum states on fault-tolerant hardware with minimal T-gate overhead — the dominant cost in quantum error correction. Analysed circuit constructions for state preparation and their implications for near-term quantum advantage in optimisation and simulation.</p>
+        </div>
+      </div>
+
+      <div class="research-item" data-r data-d="5">
+        <div class="research-meta">
+          <div class="research-num">05</div>
+          <div class="research-tag-group"><span class="r-tag">Quant Finance</span><span class="r-tag">ML</span></div>
+        </div>
+        <div class="research-body">
+          <div class="research-origin">TurboQuant</div>
+          <h3 class="research-title">TurboQuant: High-Speed Quantitative Strategy Generation</h3>
+          <p class="research-desc">Studied TurboQuant's methodology for accelerating quantitative strategy research — fast signal generation, factor construction, and backtesting pipelines. Directly relevant to my independent work in reverse DCF modelling, stock analysis, and the quantitative finance research I am actively pursuing.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div data-r>
+      <p class="section-eye">VI — Skills</p>
+      <h2 class="section-title">Tools &amp;<br><em>disciplines.</em></h2>
+      <div class="s-rule"></div>
+    </div>
+    <div class="skills-grid" data-r data-d="1">
+      <div class="skill-row">
+        <div class="sk-cat">Languages</div><div class="sk-name">Core</div>
+        <div class="sk-tags"><span class="sk-tag">Python</span><span class="sk-tag">JavaScript</span><span class="sk-tag">TypeScript</span><span class="sk-tag">Java</span><span class="sk-tag">C++</span><span class="sk-tag">SQL</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-cat">AI &amp; Agents</div><div class="sk-name">Intelligence</div>
+        <div class="sk-tags"><span class="sk-tag">Claude API</span><span class="sk-tag">Claude Code</span><span class="sk-tag">MCP Servers</span><span class="sk-tag">Agentic AI</span><span class="sk-tag">Neural Networks</span><span class="sk-tag">Azure AI</span><span class="sk-tag">Pandas</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-cat">Backend</div><div class="sk-name">Systems</div>
+        <div class="sk-tags"><span class="sk-tag">Django</span><span class="sk-tag">Node.js</span><span class="sk-tag">Express.js</span><span class="sk-tag">Spring Boot</span><span class="sk-tag">REST APIs</span><span class="sk-tag">GraphQL</span><span class="sk-tag">Celery</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-cat">Frontend</div><div class="sk-name">Interfaces</div>
+        <div class="sk-tags"><span class="sk-tag">React</span><span class="sk-tag">Next.js</span><span class="sk-tag">Vue.js</span><span class="sk-tag">HTML/CSS</span><span class="sk-tag">Tailwind</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-cat">Data</div><div class="sk-name">Storage</div>
+        <div class="sk-tags"><span class="sk-tag">PostgreSQL</span><span class="sk-tag">MySQL</span><span class="sk-tag">MongoDB</span><span class="sk-tag">Redis</span><span class="sk-tag">Elasticsearch</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-cat">Quant Finance</div><div class="sk-name">Research</div>
+        <div class="sk-tags"><span class="sk-tag">Reverse DCF</span><span class="sk-tag">Stock Analysis</span><span class="sk-tag">Quant Research</span><span class="sk-tag">Statistics</span><span class="sk-tag">Probability</span><span class="sk-tag">Linear Algebra</span><span class="sk-tag">Calculus</span></div>
+      </div>
+      <div class="skill-row">
+        <div class="sk-cat">Infrastructure</div><div class="sk-name">DevOps</div>
+        <div class="sk-tags"><span class="sk-tag">Azure</span><span class="sk-tag">Docker</span><span class="sk-tag">Git / GitHub</span><span class="sk-tag">GitHub Actions</span><span class="sk-tag">VS Code</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="wrap">
+    <div data-r style="text-align:center;">
+      <p class="section-eye">VII — Certifications</p>
+      <h2 class="section-title">Verified<br><em>credentials.</em></h2>
+      <div class="s-rule center"></div>
+    </div>
+    <div class="certs-list" data-r data-d="1">
+      <div class="cert-row">
+        <div class="cert-row-num">01</div>
+        <div><div class="cert-row-name">Introduction to Business Valuation</div><div class="cert-row-issuer">Corporate Finance Institute®</div></div>
+        <div class="cert-row-date">May 2026</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">02</div>
+        <div><div class="cert-row-name">Fundamentals of Financial Analysis</div><div class="cert-row-issuer">London Business School</div></div>
+        <div class="cert-row-date">May 2026</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">03</div>
+        <div><div class="cert-row-name">Artificial Intelligence on Microsoft Azure</div><div class="cert-row-issuer">Microsoft</div></div>
+        <div class="cert-row-date">May 2026</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">04</div>
+        <div><div class="cert-row-name">AI For Everyone</div><div class="cert-row-issuer">DeepLearning.AI</div></div>
+        <div class="cert-row-date">May 2026</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">05</div>
+        <div><div class="cert-row-name">Investment Banking Job Simulation</div><div class="cert-row-issuer">J.P. Morgan · Forage</div></div>
+        <div class="cert-row-date">May 2026</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">06</div>
+        <div><div class="cert-row-name">Java Programming: Solving Problems with Software</div><div class="cert-row-issuer">Duke University · Coursera</div></div>
+        <div class="cert-row-date">Verified</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">07</div>
+        <div><div class="cert-row-name">Data Structures</div><div class="cert-row-issuer">UC San Diego · Coursera</div></div>
+        <div class="cert-row-date">Verified</div>
+      </div>
+      <div class="cert-row">
+        <div class="cert-row-num">08</div>
+        <div><div class="cert-row-name">Game Theory</div><div class="cert-row-issuer">Stanford + UBC · Coursera</div></div>
+        <div class="cert-row-date">Verified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div data-r style="text-align:center;">
+      <p class="section-eye">VIII — Contact</p>
+      <h2 class="section-title">Let's build<br><em>something real.</em></h2>
+      <div class="s-rule center"></div>
+      <p class="contact-sub">Open to roles in AI engineering, software development, and quant research.</p>
+    </div>
+    <div class="contact-grid" data-r data-d="1">
+      <a href="mailto:kvdesai2002@gmail.com" class="c-item">
+        <div class="c-type">Email</div><div class="c-val">kvdesai2002@gmail.com</div><span class="c-arr">↗</span>
+      </a>
+      <a href="https://github.com/krish-vd" target="_blank" class="c-item">
+        <div class="c-type">GitHub</div><div class="c-val">github.com/krish-vd</div><span class="c-arr">↗</span>
+      </a>
+      <a href="https://linkedin.com/in/krishvdesai" target="_blank" class="c-item">
+        <div class="c-type">LinkedIn</div><div class="c-val">linkedin.com/in/krishvdesai</div><span class="c-arr">↗</span>
+      </a>
+      <a href="https://leetcode.com/KrishVDesai" target="_blank" class="c-item">
+        <div class="c-type">LeetCode</div><div class="c-val">@KrishVDesai</div><span class="c-arr">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Krish Desai</p>
+  <p>Ahmedabad, Gujarat, India</p>
+  <p>Hosted on GitHub Pages</p>
+</footer>
+
+<script>
+  // Cursor
+  const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+  // Reveal
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});
+  },{threshold:.08});
+  document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
