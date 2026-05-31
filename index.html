@@ -21,7 +21,7 @@
     body * { user-select:text !important; -webkit-user-select:text !important; }
  
     /* CURSOR — mix-blend-mode:difference auto-inverts on dark bg */
-    *:not(p):not(h1):not(h2):not(h3):not(span):not(div):not(li) { cursor:none !important; }
+    a, button, #cur, #cur-r { cursor:none !important; }
     p, h1, h2, h3, span, li { cursor:auto !important; }
     #cur { position:fixed;z-index:9999;width:8px;height:8px;background:#fff;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s;mix-blend-mode:difference; }
     #cur-r { position:fixed;z-index:9998;width:32px;height:32px;border:1px solid rgba(255,255,255,.5);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s;mix-blend-mode:difference; }
