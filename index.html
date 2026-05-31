@@ -32,7 +32,7 @@
     nav { position:fixed;top:0;left:0;right:0;z-index:400;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;background:rgba(255,255,255,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--rule); }
     .nav-logo { font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--ink);text-decoration:none;letter-spacing:.02em; }
     .nav-logo em { font-style:italic;color:var(--ink-3); }
-    .nav-links { display:flex;gap:2rem;list-style:none; }
+    nav{padding:0 1.5rem;} .nav-badge{display:none;} .nav-links{display:none;} .nav-hamburger{display:flex;} .wrap{padding:0 1.5rem;}
     .nav-links a { font-size:.58rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;position:relative;transition:color .25s; }
     .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease); }
     .nav-links a:hover { color:var(--ink); }
@@ -197,7 +197,7 @@
     .c-item:hover { background:rgba(255,255,255,.045); }
     .c-item:hover::before { transform:scaleX(1); }
     .c-type { font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.8rem;font-weight:300; }
-    .c-val { font-size:.78rem;font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.02em; }
+    .c-val { font-size:.68rem;font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.02em;word-break:break-all; }
     .c-arr { font-size:.9rem;color:rgba(255,255,255,.18);position:absolute;top:2rem;right:1.75rem;transition:all .3s; }
     .c-item:hover .c-arr { color:rgba(255,255,255,.6);transform:translate(3px,-3px); }
 
@@ -232,6 +232,16 @@
 <!-- NAV -->
 <nav>
   <span class="nav-logo">Krish <em>Desai</em></span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#aitools">AI Agents</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
   <div class="nav-badge"><div class="badge-dot"></div>AI @ BDO</div>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
