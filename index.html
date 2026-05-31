@@ -17,23 +17,12 @@
       --ease:cubic-bezier(0.22,1,0.36,1);
     }
     html { scroll-behavior:smooth; }
-    body { background:var(--white);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden; }
-    body * { user-select:text !important; -webkit-user-select:text !important; }
- 
-    /* CURSOR — mix-blend-mode:difference auto-inverts on dark bg */
-    /* a, button, #cur, #cur-r { cursor:none !important; }
-    p, h1, h2, h3, span, li { cursor:auto !important; }
-    #cur { position:fixed;z-index:9999;width:8px;height:8px;background:#fff;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s;mix-blend-mode:difference; }
-    #cur-r { position:fixed;z-index:9998;width:32px;height:32px;border:1px solid rgba(255,255,255,.5);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s;mix-blend-mode:difference; }
-    body:has(a:hover,button:hover) #cur { width:12px;height:12px; }
-    body:has(a:hover,button:hover) #cur-r { width:48px;height:48px; } */
+    body { background:var(--white);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden;user-select:text;-webkit-user-select:text; }
 
-    html, body, a, button { cursor:none; }
-    #cur { position:fixed;z-index:9999;width:8px;height:8px;background:#fff;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s;mix-blend-mode:difference; }
-    #cur-r { position:fixed;z-index:9998;width:32px;height:32px;border:1px solid rgba(255,255,255,.5);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s;mix-blend-mode:difference; }
-    body:has(a:hover,button:hover) #cur { width:12px;height:12px; }
-    body:has(a:hover,button:hover) #cur-r { width:48px;height:48px; }
- 
+    /* CURSOR — mix-blend-mode:difference auto-inverts on dark bg */
+    body:has(a:hover,button:hover)
+    body:has(a:hover,button:hover)
+
     /* NAV */
     nav { position:fixed;top:0;left:0;right:0;z-index:400;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;background:rgba(255,255,255,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--rule); }
     .nav-logo { font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--ink);text-decoration:none;letter-spacing:.02em; }
@@ -46,7 +35,7 @@
     .nav-badge { display:flex;align-items:center;gap:.55rem;font-size:.56rem;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3); }
     .badge-dot { width:6px;height:6px;background:#4caf7d;border-radius:50%;animation:dp 2.5s ease-in-out infinite; }
     @keyframes dp { 0%,100%{opacity:1} 50%{opacity:.4} }
- 
+
     /* HAMBURGER */
     .nav-hamburger { display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;padding:0; }
     .nav-hamburger span { display:block;width:22px;height:1px;background:var(--ink);transition:all .3s var(--ease);transform-origin:center; }
@@ -55,11 +44,12 @@
     .nav-hamburger.open span:nth-child(3) { transform:translateY(-6px) rotate(-45deg); }
     .nav-drawer { display:none;position:fixed;top:68px;left:0;right:0;z-index:399;background:rgba(255,255,255,.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--rule);padding:1.5rem 2rem 2rem;flex-direction:column;gap:0;transform:translateY(-8px);opacity:0;transition:transform .35s var(--ease),opacity .35s var(--ease); }
     .nav-drawer.open { transform:translateY(0);opacity:1; }
+    .nav-drawer:not(.open) { pointer-events:none; }
     .nav-drawer li { list-style:none;border-bottom:1px solid var(--rule); }
     .nav-drawer li:last-child { border-bottom:none; }
     .nav-drawer a { display:block;padding:.9rem 0;font-size:.7rem;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;transition:color .2s; }
     .nav-drawer a:hover { color:var(--ink); }
- 
+
     /* HERO */
     #hero { min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 3rem;position:relative;overflow:hidden; }
     .hero-bg-text { position:absolute;font-family:var(--serif);font-size:22vw;font-weight:400;color:rgba(12,11,9,.03);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;user-select:none;white-space:nowrap;letter-spacing:-.03em; }
@@ -77,7 +67,7 @@
     .hero-scroll { position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.65rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-4); }
     .scroll-bar { width:1px;height:3rem;background:linear-gradient(to bottom,var(--ink-4),transparent);animation:sb 2s ease-in-out infinite; }
     @keyframes sb { 0%,100%{opacity:.4} 50%{opacity:1} }
- 
+
     /* SHARED */
     .wrap { max-width:880px;margin:0 auto;padding:0 4rem; }
     .section-eye { font-size:.55rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-4);font-weight:300;margin-bottom:1.3rem; }
@@ -86,7 +76,7 @@
     .s-rule { width:2.2rem;height:1px;background:var(--ink);margin-top:1.6rem; }
     .s-rule.center { margin-left:auto;margin-right:auto; }
     section { scroll-margin-top:68px; }
- 
+
     /* ABOUT */
     #about { padding:9rem 0;border-top:1px solid var(--rule); }
     .about-grid { display:grid;grid-template-columns:1.05fr 1fr;gap:7rem;align-items:start;margin-top:5rem; }
@@ -98,7 +88,7 @@
     .stat-num { font-family:var(--serif);font-size:3rem;font-weight:300;line-height:1;color:var(--ink);margin-bottom:.3rem; }
     .stat-num sup { font-family:var(--sans);font-size:.7rem;font-weight:200;letter-spacing:.04em;color:var(--ink-3); }
     .stat-lbl { font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:300; }
- 
+
     /* EXPERIENCE */
     #experience { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
     .exp-list { margin-top:5rem; }
@@ -112,13 +102,13 @@
     .exp-tags { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.1rem; }
     .exp-tag { font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid var(--ink-5);color:var(--ink-4);font-weight:300;transition:all .2s; }
     .exp-item:hover .exp-tag { border-color:var(--ink-4);color:var(--ink-3); }
- 
+
     /* PROJECTS */
     #projects { padding:9rem 0;border-top:1px solid var(--rule); }
     .proj-list { margin-top:5rem; }
     .proj-item { display:grid;grid-template-columns:3rem 1fr 6rem;gap:2.5rem;border-top:1px solid var(--rule);padding:3rem 0;position:relative;align-items:start; }
     .proj-item:last-child { border-bottom:1px solid var(--rule); }
-    .proj-item::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .proj-item::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);pointer-events:none; }
     .proj-item:hover::after { transform:scaleX(1); }
     .proj-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4);padding-top:.35rem; }
     .proj-name { font-family:var(--serif);font-size:1.7rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.65rem;line-height:1.1;transition:color .25s; }
@@ -129,14 +119,14 @@
     .proj-link { text-align:right;padding-top:.35rem; }
     .proj-link a { font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);text-decoration:none;transition:color .2s;display:inline-flex;align-items:center;gap:.4rem; }
     .proj-link a:hover { color:var(--ink); }
- 
+
     /* AI AGENTS */
     #aitools { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
     .tools-intro { font-size:.88rem;line-height:2;color:var(--ink-3);max-width:620px;margin-top:1.5rem; }
     .tools-intro strong { font-weight:400;color:var(--ink); }
     .agent-cards { display:flex;flex-direction:column;margin-top:5rem;border-top:1px solid var(--rule); }
     .agent-card { padding:3.2rem 0;border-bottom:1px solid var(--rule);position:relative; }
-    .agent-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .agent-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);pointer-events:none; }
     .agent-card:hover::after { transform:scaleX(1); }
     .agent-card-head { display:flex;align-items:center;gap:1.5rem;margin-bottom:1rem; }
     .agent-card-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4); }
@@ -151,13 +141,13 @@
     .agent-pills { display:flex;gap:.45rem;flex-wrap:wrap; }
     .a-pill { font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .6rem;border:1px solid var(--ink-5);color:var(--ink-4);font-weight:300;transition:all .2s; }
     .agent-card:hover .a-pill { border-color:var(--ink-4);color:var(--ink-3); }
- 
+
     /* RESEARCH */
     #research { padding:9rem 0;border-top:1px solid var(--rule); }
     .research-list { margin-top:5rem; }
     .research-item { display:grid;grid-template-columns:7rem 1fr;gap:3rem;border-top:1px solid var(--rule);padding:3rem 0;position:relative; }
     .research-item:last-child { border-bottom:1px solid var(--rule); }
-    .research-item::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease); }
+    .research-item::after { content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease);pointer-events:none; }
     .research-item:hover::after { transform:scaleX(1); }
     .research-meta { display:flex;flex-direction:column;gap:1rem;padding-top:.3rem; }
     .research-num { font-family:var(--serif);font-style:italic;font-size:.8rem;color:var(--ink-4); }
@@ -167,7 +157,7 @@
     .research-title { font-family:var(--serif);font-size:1.45rem;font-weight:400;letter-spacing:-.01em;color:var(--ink);margin-bottom:.75rem;line-height:1.15;transition:color .25s; }
     .research-item:hover .research-title { color:var(--ink-2); }
     .research-desc { font-size:.92rem;line-height:2;color:var(--ink-3);max-width:600px; }
- 
+
     /* SKILLS */
     #skills { padding:9rem 0;background:var(--off);border-top:1px solid var(--rule); }
     .skills-grid { margin-top:5rem;border-top:1px solid var(--rule); }
@@ -178,7 +168,7 @@
     .sk-tags { display:flex;flex-wrap:wrap;gap:.4rem; }
     .sk-tag { font-size:.58rem;letter-spacing:.08em;padding:.22rem .65rem;border:1px solid var(--ink-5);color:var(--ink-3);font-weight:300;transition:all .2s; }
     .skill-row:hover .sk-tag { border-color:var(--ink-4);color:var(--ink-2); }
- 
+
     /* CERTS */
     #certs { padding:9rem 0;border-top:1px solid var(--rule); }
     .certs-list { margin-top:5rem;border-top:1px solid var(--rule); }
@@ -188,7 +178,7 @@
     .cert-row-name { font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--ink);line-height:1.25;margin-bottom:.22rem; }
     .cert-row-issuer { font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-4);font-weight:300; }
     .cert-row-date { font-size:.56rem;letter-spacing:.1em;color:var(--ink-5);font-weight:300;text-align:right;white-space:nowrap; }
- 
+
     /* CONTACT */
     #contact { padding:9rem 0 7rem;background:var(--ink);border-top:1px solid var(--rule); }
     #contact .section-eye { color:rgba(255,255,255,.25); }
@@ -202,20 +192,20 @@
     .c-item:hover { background:rgba(255,255,255,.045); }
     .c-item:hover::before { transform:scaleX(1); }
     .c-type { font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.8rem;font-weight:300; }
-    .c-val { font-size:.78rem;font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.02em; }
+    .c-val { font-size:.78rem;font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.02em;text-align: center; }
     .c-arr { font-size:.9rem;color:rgba(255,255,255,.18);position:absolute;top:2rem;right:1.75rem;transition:all .3s; }
     .c-item:hover .c-arr { color:rgba(255,255,255,.6);transform:translate(3px,-3px); }
- 
+
     footer { background:var(--ink);border-top:1px solid rgba(255,255,255,.06);padding:1.8rem 4.5rem;display:flex;justify-content:space-between;align-items:center; }
     footer p { font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.2); }
- 
+
     /* REVEAL */
     [data-r] { opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease); }
     [data-r].on { opacity:1;transform:none; }
     [data-r][data-d="1"]{transition-delay:.1s}[data-r][data-d="2"]{transition-delay:.2s}
     [data-r][data-d="3"]{transition-delay:.3s}[data-r][data-d="4"]{transition-delay:.4s}
     [data-r][data-d="5"]{transition-delay:.5s}[data-r][data-d="6"]{transition-delay:.6s}
- 
+
     @media(max-width:768px){
       nav{padding:0 1.5rem;} .nav-badge{display:none;} .nav-links{display:none;} .nav-hamburger{display:flex;} .wrap{padding:0 1.5rem;}
       .about-grid{grid-template-columns:1fr;gap:3rem;}
@@ -232,21 +222,11 @@
   </style>
 </head>
 <body>
-<div id="cur"></div><div id="cur-r"></div>
- 
+
+
 <!-- NAV -->
 <nav>
-  <a href="#hero" class="nav-logo">Krish <em>Desai</em></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#aitools">AI Agents</a></li>
-    <li><a href="#research">Research</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#certs">Certifications</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <span class="nav-logo">Krish <em>Desai</em></span>
   <div class="nav-badge"><div class="badge-dot"></div>AI @ BDO</div>
   <button class="nav-hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -254,15 +234,15 @@
 </nav>
 <ul class="nav-drawer" id="nav-drawer">
   <li><a href="#about" class="drawer-link">About</a></li>
-  <li><a href="#experience" class="drawer-link">Experience</a></li>
+  <li><a href="javascript:void(0)" class="drawer-link">Experience</a></li>
   <li><a href="#projects" class="drawer-link">Projects</a></li>
-  <li><a href="#aitools" class="drawer-link">AI Agents</a></li>
+  <li><a href="javascript:void(0)" class="drawer-link">AI Agents</a></li>
   <li><a href="#research" class="drawer-link">Research</a></li>
   <li><a href="#skills" class="drawer-link">Skills</a></li>
   <li><a href="#certs" class="drawer-link">Certifications</a></li>
   <li><a href="#contact" class="drawer-link">Contact</a></li>
 </ul>
- 
+
 <!-- HERO — removed "500+ LeetCode" chip, added "Research & Papers" -->
 <section id="hero">
   <div class="hero-bg-text">KD</div>
@@ -277,11 +257,11 @@
       <span class="role-chip">Quant Finance</span>
       <span class="role-chip">Research &amp; Papers</span>
     </div>
-    <a href="#experience" class="hero-cta">View My Work</a>
+    <a href="#projects" class="hero-cta">View My Work</a>
   </div>
   <div class="hero-scroll">Scroll<div class="scroll-bar"></div></div>
 </section>
- 
+
 <!-- ABOUT — LeetCode demoted to passing mention only -->
 <section id="about">
   <div class="wrap">
@@ -299,7 +279,7 @@
         </div>
       </div>
       <div data-r data-d="2">
-        <div class="stat-row"><div class="stat-num">1 yr & 9mo</div><div class="stat-lbl">At BDO India · AI Executive</div></div>
+        <div class="stat-row"><div class="stat-num">1<sup>yr 9mo</sup></div><div class="stat-lbl">At BDO India · AI Executive</div></div>
         <div class="stat-row"><div class="stat-num">5<sup>+</sup></div><div class="stat-lbl">Production Projects Shipped</div></div>
         <div class="stat-row"><div class="stat-num">8</div><div class="stat-lbl">Certifications Earned</div></div>
         <div class="stat-row"><div class="stat-num">935</div><div class="stat-lbl">LeetCode Problems · Strong DSA Foundation</div></div>
@@ -307,7 +287,7 @@
     </div>
   </div>
 </section>
- 
+
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="wrap">
@@ -346,7 +326,7 @@
     </div>
   </div>
 </section>
- 
+
 <!-- PROJECTS — PCS and AI agents front and centre -->
 <section id="projects">
   <div class="wrap">
@@ -356,7 +336,7 @@
       <div class="s-rule"></div>
     </div>
     <div class="proj-list">
- 
+
       <div class="proj-item" data-r data-d="1">
         <div class="proj-num">01</div>
         <div>
@@ -364,9 +344,9 @@
           <p class="proj-desc">Enterprise accounting software for HNIs at BDO India. Engineered backend systems handling complex financial data pipelines, Elasticsearch-powered search, distributed task queues, and an AI integration layer being rolled out to wealth managers.</p>
           <div class="proj-pills"><span class="pill">Django</span><span class="pill">PostgreSQL</span><span class="pill">Elasticsearch</span><span class="pill">Celery</span><span class="pill">Redis</span><span class="pill">Azure</span><span class="pill">AI/ML</span></div>
         </div>
-        <div class="proj-link"><a href="#">Private ↗</a></div>
+        <div class="proj-link"><a href="javascript:void(0)">Private ↗</a></div>
       </div>
- 
+
       <div class="proj-item" data-r data-d="2">
         <div class="proj-num">02</div>
         <div>
@@ -374,9 +354,9 @@
           <p class="proj-desc">An AI-powered equity research agent built with Claude and MCP tools. Given a ticker, the agent performs multi-step reasoning across business model, financials, competitive moat, risks, and valuation — synthesising a structured investment thesis autonomously.</p>
           <div class="proj-pills"><span class="pill">Claude API</span><span class="pill">MCP</span><span class="pill">Claude Code</span><span class="pill">Agentic AI</span><span class="pill">Finance</span></div>
         </div>
-        <div class="proj-link"><a href="#aitools">Details ↗</a></div>
+        <div class="proj-link"><span style="font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);">Details</span></div>
       </div>
- 
+
       <div class="proj-item" data-r data-d="3">
         <div class="proj-num">03</div>
         <div>
@@ -384,9 +364,9 @@
           <p class="proj-desc">Inverts the traditional DCF model — works backwards from a stock's current market price to solve for the implied growth rate baked in by the market, then uses Claude to interpret whether the valuation is justified or mispriced.</p>
           <div class="proj-pills"><span class="pill">Claude API</span><span class="pill">Claude Code</span><span class="pill">DCF Modelling</span><span class="pill">Quant Finance</span></div>
         </div>
-        <div class="proj-link"><a href="#aitools">Details ↗</a></div>
+        <div class="proj-link"><span style="font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-4);">Details</span></div>
       </div>
- 
+
       <div class="proj-item" data-r data-d="4">
         <div class="proj-num">04</div>
         <div>
@@ -396,7 +376,7 @@
         </div>
         <div class="proj-link"><a href="https://github.com/krish-vd" target="_blank">GitHub ↗</a></div>
       </div>
- 
+
       <div class="proj-item" data-r data-d="5">
         <div class="proj-num">05</div>
         <div>
@@ -406,7 +386,7 @@
         </div>
         <div class="proj-link"><a href="https://github.com/krish-vd" target="_blank">GitHub ↗</a></div>
       </div>
- 
+
       <div class="proj-item" data-r data-d="6">
         <div class="proj-num">06</div>
         <div>
@@ -416,11 +396,11 @@
         </div>
         <div class="proj-link"><a href="https://github.com/krish-vd" target="_blank">GitHub ↗</a></div>
       </div>
- 
+
     </div>
   </div>
 </section>
- 
+
 <!-- AI AGENTS -->
 <section id="aitools">
   <div class="wrap">
@@ -431,7 +411,7 @@
       <p class="tools-intro">I build production-grade AI agents using the <strong>Claude API</strong>, <strong>Claude Code</strong>, and <strong>MCP (Model Context Protocol)</strong> servers — orchestrating multi-step reasoning, tool use, and agentic workflows across finance and software domains.</p>
     </div>
     <div class="agent-cards" data-r data-d="1">
- 
+
       <div class="agent-card">
         <div class="agent-card-head">
           <div class="agent-card-num">01</div>
@@ -448,7 +428,7 @@
           <span class="a-pill">Claude API</span><span class="a-pill">Claude Code</span><span class="a-pill">MCP</span><span class="a-pill">Agentic AI</span><span class="a-pill">Equity Research</span>
         </div>
       </div>
- 
+
       <div class="agent-card">
         <div class="agent-card-head">
           <div class="agent-card-num">02</div>
@@ -465,11 +445,11 @@
           <span class="a-pill">Claude API</span><span class="a-pill">Reverse DCF</span><span class="a-pill">Quant Finance</span><span class="a-pill">Claude Code</span><span class="a-pill">Binary Search</span>
         </div>
       </div>
- 
+
     </div>
   </div>
 </section>
- 
+
 <!-- RESEARCH -->
 <section id="research">
   <div class="wrap">
@@ -479,7 +459,7 @@
       <div class="s-rule"></div>
     </div>
     <div class="research-list">
- 
+
       <div class="research-item" data-r data-d="1">
         <div class="research-meta">
           <div class="research-num">01</div>
@@ -491,7 +471,7 @@
           <p class="research-desc">Conducted an independent research initiative inspired by this seminal paper. Engineered a miniature hyperlinked knowledge graph — a scaled-down Wikipedia prototype — modelling web pages as nodes and hyperlinks as directed edges in a stochastic adjacency matrix. Implemented the PageRank algorithm using iterative eigenvector decomposition to compute a stationary probability distribution, simulating a random surfer with a damping factor of 0.85. After running convergence cycles, visualised rank distribution across nodes — empirically confirming that nodes with higher indegree centrality and quality backlinks converge to significantly higher PageRank scores, mirroring how Google's infrastructure prioritises authoritative pages.</p>
         </div>
       </div>
- 
+
       <div class="research-item" data-r data-d="2">
         <div class="research-meta">
           <div class="research-num">02</div>
@@ -503,7 +483,7 @@
           <p class="research-desc">Studied Google's foundational framework for distributed computation across commodity clusters. Analysed the Map/Reduce abstraction for parallelising large-scale data transformations, fault tolerance via task re-execution, and how the programming model underpins modern data engineering infrastructure — directly relevant to the data pipeline work at BDO.</p>
         </div>
       </div>
- 
+
       <div class="research-item" data-r data-d="3">
         <div class="research-meta">
           <div class="research-num">03</div>
@@ -515,7 +495,7 @@
           <p class="research-desc">Examined the ToolGrad framework for differentiable tool selection in language model pipelines. Studied how gradient signals propagate through discrete tool-use decisions, enabling end-to-end optimisation of tool-augmented inference — with direct application to the agentic AI systems I build.</p>
         </div>
       </div>
- 
+
       <div class="research-item" data-r data-d="4">
         <div class="research-meta">
           <div class="research-num">04</div>
@@ -527,7 +507,7 @@
           <p class="research-desc">Studied the problem of preparing arbitrary quantum states on fault-tolerant hardware with minimal T-gate overhead — the dominant cost in quantum error correction. Analysed circuit constructions for state preparation and their implications for near-term quantum advantage in optimisation and simulation.</p>
         </div>
       </div>
- 
+
       <div class="research-item" data-r data-d="5">
         <div class="research-meta">
           <div class="research-num">05</div>
@@ -539,11 +519,11 @@
           <p class="research-desc">Studied TurboQuant's methodology for accelerating quantitative strategy research — fast signal generation, factor construction, and backtesting pipelines. Directly relevant to my independent work in reverse DCF modelling, stock analysis, and the quantitative finance research I am actively pursuing.</p>
         </div>
       </div>
- 
+
     </div>
   </div>
 </section>
- 
+
 <!-- SKILLS -->
 <section id="skills">
   <div class="wrap">
@@ -584,7 +564,7 @@
     </div>
   </div>
 </section>
- 
+
 <!-- CERTIFICATIONS -->
 <section id="certs">
   <div class="wrap">
@@ -637,7 +617,7 @@
     </div>
   </div>
 </section>
- 
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="wrap">
@@ -663,26 +643,19 @@
     </div>
   </div>
 </section>
- 
+
 <footer>
   <p>© 2026 Krish Desai</p>
   <p>Ahmedabad, Gujarat, India</p>
   <p>Hosted on GitHub Pages</p>
 </footer>
- 
+
 <script>
-  const cur=document.getElementById('cur'),cr=document.getElementById('cur-r');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  if(e.buttons===1) return;
-  });
-  (function loop(){cur.style.left=mx+'px';cur.style.top=my+'px';rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop);})();
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});
   },{threshold:.08});
   document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
- 
+
   // Hamburger menu
   const hb = document.getElementById('hamburger');
   const dr = document.getElementById('nav-drawer');
