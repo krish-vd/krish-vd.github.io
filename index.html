@@ -32,7 +32,8 @@
     nav { position:fixed;top:0;left:0;right:0;z-index:400;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;background:rgba(255,255,255,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--rule); }
     .nav-logo { font-family:var(--serif);font-size:1.15rem;font-weight:400;color:var(--ink);text-decoration:none;letter-spacing:.02em; }
     .nav-logo em { font-style:italic;color:var(--ink-3); }
-    nav{padding:0 1.5rem;} .nav-badge{display:none;} .nav-links{display:none;} .nav-hamburger{display:flex;} .wrap{padding:0 1.5rem;}
+    .nav-links { display:flex;gap:1.4rem;list-style:none; }
+.nav-links a { font-size:.52rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;position:relative;transition:color .25s; }
     .nav-links a { font-size:.58rem;font-weight:300;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);text-decoration:none;position:relative;transition:color .25s; }
     .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease); }
     .nav-links a:hover { color:var(--ink); }
